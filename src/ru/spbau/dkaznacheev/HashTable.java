@@ -1,18 +1,20 @@
 package ru.spbau.dkaznacheev;
 
 /**
-* Stores elements of java.lang.String inside by their hash codes.
-* Automatically resizes if the size exceeds a certain fraction of capacity.
+ * Stores elements of java.lang.String inside by their hash codes.
+ * Automatically resizes if the size exceeds a certain fraction of capacity.
  **/
 public class HashTable {
     /**
      * Current number of elements in the table.
      **/
     private int size;
+
     /**
      * Current capacity of the table.
      **/
     private int capacity;
+
     /**
      * The storage, consists of Lists, which contain the elements.
      **/
@@ -23,15 +25,22 @@ public class HashTable {
      **/
     private final double SIZE_PERCENT_LIMIT = 0.75;
 
-    public HashTable () {
+    /**
+     * Creates a HashTable with default capacity 4.
+     */
+    public HashTable() {
         this(4);
     }
 
+    /**
+     * Creates a HashTable with given capacity.
+     */
     public HashTable (int capacity) {
         this.capacity = capacity;
         storage = new List[capacity];
-        for (int i = 0; i < capacity; i++)
+        for (int i = 0; i < capacity; i++) {
             storage[i] = new List();
+        }
         size = 0;
     }
 
@@ -66,8 +75,8 @@ public class HashTable {
         HashTable newTable = new HashTable(newCapacity);
         for (int i = 0; i < capacity; i++) {
             while (storage[i].size() > 0) {
-                List.Node node = storage[i].popFront();
-                newTable.put(node.key, node.value);
+                List.Pair pair = storage[i].popFront();
+                newTable.put(pair.key, pair.value);
             }
         }
         this.storage = newTable.storage;
@@ -102,7 +111,7 @@ public class HashTable {
         int index = getIndex(key);
         if (!storage[index].contains(key))
             size++;
-        String result = storage[index].put(key,value);
+        String result = storage[index].put(key, value);
         if (size >= SIZE_PERCENT_LIMIT * capacity)
             resize(2 * capacity);
         return result;
@@ -124,7 +133,7 @@ public class HashTable {
      **/
     public String remove (String key) {
         int index = getIndex(key);
-        if (!storage[index].contains(key))
+        if (storage[index].contains(key))
             size--;
         return storage[index].remove(key);
     }

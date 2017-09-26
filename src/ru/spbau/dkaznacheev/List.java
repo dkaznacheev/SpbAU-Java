@@ -1,21 +1,40 @@
 package ru.spbau.dkaznacheev;
+
+import com.sun.org.apache.bcel.internal.generic.LUSHR;
+
 /**
  * Linked list that stores elements of java.lang.String.
  **/
 public class List {
+
     /**
-     * Node Subclass that describes the key-value pair.
+     * Subclass that describes the key-value pair.
+     */
+    public class Pair {
+        public String key;
+        public String value;
+
+        public Pair(String key, String value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+    /**
+     * Node Subclass that describes the list's node.
      **/
-    class Node {
-        String key;
-        String value;
+    private class Node {
+        /**
+         * The key-value pair inside the node.
+         */
+        private Pair pair;
         /**
          * The next node.
          **/
-        Node next;
-        Node (String key, String value) {
-            this.key = key;
-            this.value = value;
+        private Node next;
+
+        private Node (String key, String value) {
+            this.pair = new Pair(key, value);
+            this.next = null;
         }
     }
     /**
@@ -27,9 +46,7 @@ public class List {
      **/
     private int size;
 
-    public List () {
-        size = 0;
-        head = null;
+    public List() {
     }
 
     public List (String key, String value) {
@@ -51,8 +68,8 @@ public class List {
             return null;
         Node node = head;
         do {
-            if (node.key.equals(key))
-                return node.value;
+            if (node.pair.key.equals(key))
+                return node.pair.value;
             node = node.next;
         } while (node != null);
         return null;
@@ -72,9 +89,9 @@ public class List {
         Node node = head;
         Node tail;
         do {
-            if (node.key.equals(key)) {
-                String oldValue = node.value;
-                node.value = value;
+            if (node.pair.key.equals(key)) {
+                String oldValue = node.pair.value;
+                node.pair.value = value;
                 return oldValue;
             }
             tail = node;
@@ -88,10 +105,10 @@ public class List {
      * Returns the first key-value pair of the list, and then deletes it.
      * @return First node, or null if the list is empty.
      **/
-    public Node popFront () {
+    public Pair popFront () {
         if (head == null)
             return null;
-        Node result = head;
+        Pair result = head.pair;
         head = head.next;
         size--;
         return result;
@@ -107,8 +124,8 @@ public class List {
         Node node = head;
         Node prev = null;
         do {
-            if (node.key.equals(key)) {
-                String oldValue = node.value;
+            if (node.pair.key.equals(key)) {
+                String oldValue = node.pair.value;
                 if (prev != null) {
                     prev.next = node.next;
                 } else {
