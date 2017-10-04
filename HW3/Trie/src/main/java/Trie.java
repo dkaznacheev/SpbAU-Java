@@ -1,8 +1,16 @@
 import java.io.*;
 
+/**
+ * Trie stores strings, it can add, remove and check the existence of strings.
+ */
 public class Trie implements Serializable, MySerializable{
     private static final int CHAR_NUMBER = 256*256;
 
+    /**
+     * writes the trie to given output byte stream
+     * @param out the output stream
+     * @throws IOException
+     */
     @Override
     public void serialize(OutputStream out) throws IOException {
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(out);
@@ -11,6 +19,11 @@ public class Trie implements Serializable, MySerializable{
         objectOutputStream.close();
     }
 
+    /**
+     * reads the object from input byte stream
+     * @param in the input stream
+     * @throws IOException
+     */
     @Override
     public void deserialize(InputStream in) throws IOException {
         ObjectInputStream objectInputStream = new ObjectInputStream(in);
@@ -22,10 +35,26 @@ public class Trie implements Serializable, MySerializable{
         }
     }
 
+    /**
+     * Represents the node in a trie structure.
+     */
     private class Node {
+
+        /**
+         * is that node the end of some string in a trie
+         */
         private boolean isTerminal;
+
+        /**
+         * an array of next nodes from this node
+         */
         private Node next[];
+
+        /**
+         * how many strings there are with this prefix
+         */
         private int stringNumber;
+
         private Node() {
             this.isTerminal = false;
             this.next = new Node[CHAR_NUMBER];
@@ -33,12 +62,20 @@ public class Trie implements Serializable, MySerializable{
         }
     }
 
+    /**
+     * the starting node of trie
+     */
     private Node head;
 
     public Trie() {
         head = new Node();
     }
 
+    /**
+     * adds the string to trie, returns true if this string already existed
+     * @param element added string
+     * @return if there already was this string
+     */
     public boolean add(String element) {
         if (contains(element))
             return true;
@@ -59,6 +96,11 @@ public class Trie implements Serializable, MySerializable{
         return false;
     }
 
+    /**
+     * Returns if there is the string in a trie
+     * @param element string to check
+     * @return if there was this string
+     */
     public boolean contains(String element) {
         Node node = head;
         for (int i = 0; i < element.length(); i++) {
@@ -71,6 +113,11 @@ public class Trie implements Serializable, MySerializable{
         return node.isTerminal;
     }
 
+    /**
+     * Removes the string from the trie, returns true if there was such string
+     * @param element string to remove
+     * @return if there was such string
+     */
     public boolean remove(String element) {
         if (!contains(element))
             return false;
@@ -94,10 +141,19 @@ public class Trie implements Serializable, MySerializable{
         return true;
     }
 
+    /**
+     * Returns the size of trie
+     * @return size of trie
+     */
     public int size() {
         return head.stringNumber;
     }
 
+    /**
+     * Returns how many strings start with given prefix
+     * @param prefix prefix to check
+     * @return how many strings start with given prefix
+     */
     public int howManyStartsWithPrefix(String prefix) {
         Node node = head;
         for (int i = 0; i < prefix.length(); i++) {
@@ -108,11 +164,4 @@ public class Trie implements Serializable, MySerializable{
         }
         return node.stringNumber;
     }
-
-    private void writeObject(java.io.ObjectOutputStream out)
-            throws IOException {
-
-    }
-
-
 }
