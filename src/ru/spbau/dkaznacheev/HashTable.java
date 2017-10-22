@@ -35,13 +35,12 @@ public class HashTable {
     /**
      * Creates a HashTable with given capacity.
      */
-    public HashTable (int capacity) {
+    public HashTable(int capacity) {
         this.capacity = capacity;
         storage = new List[capacity];
         for (int i = 0; i < capacity; i++) {
             storage[i] = new List();
         }
-        size = 0;
     }
 
     /**
@@ -62,7 +61,7 @@ public class HashTable {
      * @param key The given key
      * @return The index in the array.
      **/
-    public int getIndex (String key) {
+    private int getIndex(String key) {
         int hash = getHash(key);
         return hash & (capacity - 1);
     }
@@ -71,12 +70,12 @@ public class HashTable {
      * Resizes the table.
      * @param newCapacity New capacity of the table.
      **/
-    private void resize (int newCapacity) {
+    private void resize(int newCapacity) {
         HashTable newTable = new HashTable(newCapacity);
         for (int i = 0; i < capacity; i++) {
             while (storage[i].size() > 0) {
                 List.Pair pair = storage[i].popFront();
-                newTable.put(pair.key, pair.value);
+                newTable.put(pair.getKey(), pair.getValue());
             }
         }
         this.storage = newTable.storage;
@@ -87,7 +86,7 @@ public class HashTable {
      * Returns how many elements is in the table.
      * @return The table size.
      **/
-    public int size () {
+    public int size() {
         return size;
     }
 
@@ -96,7 +95,7 @@ public class HashTable {
      * @param key The given key.
      * @return Whether there is an element.
      **/
-    public boolean contains (String key) {
+    public boolean contains(String key) {
         int index = getIndex(key);
         return storage[index].contains(key);
     }
@@ -107,7 +106,7 @@ public class HashTable {
      * @param value The new value
      * @return Previous value, null if there was no value with this key.
      **/
-    public String put (String key, String value) {
+    public String put(String key, String value) {
         int index = getIndex(key);
         if (!storage[index].contains(key))
             size++;
@@ -122,21 +121,24 @@ public class HashTable {
      * @param key The key.
      * @return The value stored, null if there was no value with this key.
      **/
-    public String get (String key) {
+    public String get(String key) {
         int index = getIndex(key);
         return storage[index].get(key);
     }
+
     /**
      * Returns the value stored with given key and removes the key-value pair from the table.
      * @param key The key.
      * @return The value stored, null if there was no value with this key.
      **/
-    public String remove (String key) {
+    public String remove(String key) {
         int index = getIndex(key);
-        if (storage[index].contains(key))
+        if (storage[index].contains(key)) {
             size--;
+        }
         return storage[index].remove(key);
     }
+
     /**
      * Clears the table.
      **/
@@ -145,5 +147,4 @@ public class HashTable {
             storage[i] = new List();
         size = 0;
     }
-
 }

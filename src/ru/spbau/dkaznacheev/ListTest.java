@@ -6,82 +6,82 @@ import static org.junit.Assert.*;
 
 public class ListTest {
     @Test
-    public void size() throws Exception {
+    public void sizeChangesOnAdd() throws Exception {
         List list = new List();
-        assert (list.size() == 0);
+        assertEquals (0, list.size());
         list.put("1", "v1");
-        assert (list.size() == 1);
+        assertEquals (1, list.size());
         list.put("2", "v2");
-        assert (list.size() == 2);
+        assertEquals (2, list.size());
         list.put("2", "v3");
-        assert (list.size() == 2);
+        assertEquals (2, list.size());
     }
 
     @Test
-    public void get() throws Exception {
+    public void getTest() throws Exception {
         List list = new List("1", "v1");
-        assert(list.get("1").equals("v1"));
-        assert(list.get("2") == null);
+        assertTrue(list.get("1").equals("v1"));
+        assertNull(list.get("2"));
     }
 
     @Test
-    public void put() throws Exception {
+    public void putTest() throws Exception {
         List list = new List();
         list.put("1", "v1");
-        assert(list.size() == 1);
-        assert(list.contains("1"));
-        assert(!list.contains("v1"));
+        assertEquals(1, list.size());
+        assertTrue(list.contains("1"));
+        assertTrue(!list.contains("v1"));
         String result = list.put("1", "v11");
-        assert(result.equals("v1"));
-        assert(list.size() == 1);
+        assertTrue(result.equals("v1"));
+        assertEquals(1, list.size());
     }
 
     @Test
-    public void popFront() throws Exception {
+    public void popFrontTest() throws Exception {
         List list = new List();
         list.put("1", "v1");
         list.put("2", "v2");
         List.Pair pair = list.popFront();
-        assert(pair.key.equals("1"));
-        assert(pair.value.equals("v1"));
-        assert(list.size() == 1);
-        assert(!list.contains("1"));
+        assertTrue(pair.getKey().equals("1"));
+        assertTrue(pair.getValue().equals("v1"));
+        assertEquals(1, list.size());
+        assertTrue(!list.contains("1"));
         pair = list.popFront();
-        assert(pair.key.equals("2"));
-        assert(pair.value.equals("v2"));
-        assert(list.size() == 0);
+        assertTrue(pair.getKey().equals("2"));
+        assertTrue(pair.getValue().equals("v2"));
+        assertEquals(0, list.size());
         pair = list.popFront();
-        assert(pair == null);
+        assertNull(pair);
     }
 
     @Test
-    public void remove() throws Exception {
+    public void removeTest() throws Exception {
         List list = new List();
         list.put("1", "v1");
         list.put("2", "v2");
         list.put("3", "v3");
         String result = list.remove("2");
-        assert(result.equals("v2"));
-        assert(!list.contains("2"));
-        assert(list.size() == 2);
+        assertTrue(result.equals("v2"));
+        assertTrue(!list.contains("2"));
+        assertEquals(2, list.size());
         result = list.remove("4");
-        assert(result == null);
-        assert(list.size() == 2);
+        assertNull(result);
+        assertEquals(2, list.size());
         list.remove("1");
         list.remove("3");
-        assert(list.size() == 0);
+        assertEquals(0, list.size());
         result = list.remove("1");
-        assert(result == null);
-        assert(list.size() == 0);
+        assertNull(result);
+        assertEquals(0, list.size());
     }
 
     @Test
-    public void contains() throws Exception {
+    public void containsAdded() throws Exception {
         List list = new List();
         list.put("1", "v1");
         list.put("2", "v2");
-        assert(list.contains("1"));
-        assert(!list.contains("3"));
+        assertTrue(list.contains("1"));
+        assertTrue(!list.contains("3"));
     }
 
 

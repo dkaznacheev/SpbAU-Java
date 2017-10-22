@@ -10,54 +10,122 @@ public class List {
     /**
      * Subclass that describes the key-value pair.
      */
-    public class Pair {
-        public String key;
-        public String value;
+    public static class Pair {
 
+        /**
+         * Key of pair
+         */
+        private String key;
+
+        /**
+         * Value of pair
+         */
+        private String value;
+
+        /**
+         * Creates key-value pair
+         * @param key key of pair
+         * @param value value of pair
+         */
         public Pair(String key, String value) {
             this.key = key;
             this.value = value;
         }
+
+        /**
+         * Returns key
+         * @return key
+         */
+        public String getKey() {
+            return key;
+        }
+
+        /**
+         * Returns value
+         * @return value
+         */
+        public String getValue() {
+            return value;
+        }
+
+        /**
+         * Sets key
+         * @param key the new key
+         */
+        public void setKey(String key) {
+            this.key = key;
+        }
+
+        /**
+         * Sets value
+         * @param value the new value
+         */
+        public void setValue(String value) {
+            this.value = value;
+        }
+
     }
+
     /**
      * Node Subclass that describes the list's node.
      **/
     private class Node {
+
         /**
          * The key-value pair inside the node.
          */
         private Pair pair;
+
         /**
          * The next node.
          **/
         private Node next;
 
+        /**
+         * Creates a node with key and value
+         * @param key key of node
+         * @param value value of node
+         */
         private Node (String key, String value) {
             this.pair = new Pair(key, value);
             this.next = null;
         }
     }
+
     /**
      * The first element of the list.
      **/
     private Node head;
+
     /**
      * Size of the list.
      **/
     private int size;
 
-    public List() {
-    }
+    /**
+     * Creates empty list
+     */
+    public List() { }
 
+    /**
+     * Creates List with one node
+     * @param key key of node
+     * @param value value of node
+     */
     public List (String key, String value) {
         head = new Node(key, value);
         head.next = null;
         size = 1;
     }
 
+    /**
+     * Returns the size of list.
+     * @return size of list
+     **/
     public int size() {
         return size;
     }
+
     /**
      * Returns the value of the node with given key.
      * @param key The key.
@@ -74,6 +142,7 @@ public class List {
         } while (node != null);
         return null;
     }
+
     /**
      * Changes or adds the value of the given key, returns the previous value.
      * @param key The key
@@ -101,6 +170,7 @@ public class List {
         size++;
         return null;
     }
+
     /**
      * Returns the first key-value pair of the list, and then deletes it.
      * @return First node, or null if the list is empty.
@@ -113,6 +183,7 @@ public class List {
         size--;
         return result;
     }
+
     /**
      * Returns the value stored with given key and removes the key-value pair from the list.
      * @param key The key.
@@ -139,6 +210,7 @@ public class List {
         } while (node != null);
         return null;
     }
+
     /**
      * Checks if there is an element with the given key in the list.
      * @param key The given key.
