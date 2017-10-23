@@ -4,14 +4,20 @@ import static org.junit.Assert.*;
 
 public class MatrixTaskTest {
     @Test
-    public void sortColumns() throws Exception {
+    public void simpleSortColumns()  {
         int[][] matrix1 = {{9, 2, 3},
                           {8, 1, 4},
                           {7, 6 , 5}};
         int[][] expected1 = {{2, 3, 9},
                             {1, 4, 8},
                             {6 , 5, 7}};
-        MatrixTask.sortColumns(matrix1);
+        try {
+            MatrixTask.sortColumns(matrix1);
+        } catch (UnevenRowsException e) {
+            assertTrue(false);
+        } catch (NullRowException e) {
+            assertTrue(false);
+        }
         assertArrayEquals(expected1, matrix1);
         int[][] matrix2 = {{9, 2},
                            {8, 1},
@@ -19,8 +25,44 @@ public class MatrixTaskTest {
         int[][] expected2 = {{2, 9},
                              {1, 8},
                              {6, 7}};
-        MatrixTask.sortColumns(matrix2);
+        try {
+            MatrixTask.sortColumns(matrix2);
+        } catch (UnevenRowsException e) {
+            assertTrue(false);
+        } catch (NullRowException e) {
+            assertTrue(false);
+        }
         assertArrayEquals(expected2, matrix2);
+    }
+
+    @Test
+    public void UnevenRowsException()  {
+        int[][] matrix = {{9, 2},
+                {8, 1, 4},
+                {7}};
+        try {
+            MatrixTask.sortColumns(matrix);
+            assertTrue(false);
+        } catch (UnevenRowsException e) {
+            assertTrue(true);
+        } catch (NullRowException e) {
+            assertTrue(false);
+        }
+    }
+
+    @Test
+    public void NullRowException()  {
+        int[][] matrix = {{9, 2, 3},
+                {8, 1, 4},
+                null};
+        try {
+            MatrixTask.sortColumns(matrix);
+            assertTrue(false);
+        } catch (UnevenRowsException e) {
+            assertTrue(false);
+        } catch (NullRowException e) {
+            assertTrue(true);
+        }
     }
 
     @Test
