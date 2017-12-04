@@ -1,4 +1,4 @@
-package ru.spbau.dkaznacheev;
+package HashTable;
 
 public class Main {
     static void test1() {
