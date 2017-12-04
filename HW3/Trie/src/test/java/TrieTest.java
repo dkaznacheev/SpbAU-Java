@@ -1,39 +1,43 @@
 import org.junit.Test;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+
 import static org.junit.Assert.*;
 
 public class TrieTest {
     @Test
-    public void add() throws Exception {
+    public void addStringsTest() throws Exception {
         Trie trie = new Trie();
         trie.add("a");
         trie.add("ab");
         trie.add("aba");
         trie.add("abc");
         trie.add("abb");
-        assert (trie.contains("abc"));
-        assert (trie.size() == 5);
+        assertTrue(trie.contains("abc"));
+        assertEquals(5, trie.size());
     }
 
     @Test
-    public void contains() throws Exception {
+    public void containsStringsTest() throws Exception {
         Trie trie = new Trie();
         trie.add("a");
         trie.add("ac");
         trie.add("aba");
         trie.add("abc");
         trie.add("abb");
-        assert (trie.contains("a"));
-        assert (!trie.contains("ab"));
-        assert (trie.contains("aba"));
-        assert (trie.contains("abc"));
-        assert (trie.contains("abb"));
-        assert (!trie.contains("b"));
-        assert (!trie.contains("abcd"));
+        assertTrue(trie.contains("a"));
+        assertFalse(trie.contains("ab"));
+        assertTrue(trie.contains("aba"));
+        assertTrue(trie.contains("abc"));
+        assertTrue(trie.contains("abb"));
+        assertFalse(trie.contains("b"));
+        assertFalse(trie.contains("abcd"));
     }
 
     @Test
-    public void remove() throws Exception {
+    public void removeStringsTest() throws Exception {
         Trie trie = new Trie();
         trie.add("a");
         trie.add("ab");
@@ -41,35 +45,35 @@ public class TrieTest {
         trie.add("abc");
         trie.add("abb");
         trie.remove("ab");
-        assert (trie.contains("a"));
-        assert (!trie.contains("ab"));
-        assert (trie.contains("aba"));
+        assertTrue(trie.contains("a"));
+        assertFalse(trie.contains("ab"));
+        assertTrue(trie.contains("aba"));
         trie.remove("abc");
-        assert (!trie.contains("abc"));
+        assertFalse(trie.contains("abc"));
     }
 
     @Test
-    public void size() throws Exception {
+    public void removeChangesSizeTest() throws Exception {
         Trie trie = new Trie();
         trie.add("a");
         trie.add("ab");
         trie.add("aba");
         trie.add("abc");
         trie.add("abb");
-        assert (trie.contains("abc"));
-        assert (trie.size() == 5);
+        assertTrue(trie.contains("abc"));
+        assertEquals(5, trie.size());
         trie.remove("a");
-        assert (trie.size() == 4);
+        assertEquals(4, trie.size());
         trie.remove("ab");
-        assert (trie.size() == 3);
+        assertEquals(3, trie.size());
         trie.remove("aba");
-        assert (trie.size() == 2);
+        assertEquals(2, trie.size());
         trie.remove("abc");
-        assert (trie.size() == 1);
+        assertEquals(1, trie.size());
         trie.remove("abb");
-        assert (trie.size() == 0);
+        assertEquals(0, trie.size());
         trie.remove("aaaa");
-        assert (trie.size() == 0);
+        assertEquals(0, trie.size());
 
     }
 
@@ -81,10 +85,57 @@ public class TrieTest {
         trie.add("aba");
         trie.add("abc");
         trie.add("abb");
-        assert (trie.howManyStartsWithPrefix("a") == 5);
-        assert (trie.howManyStartsWithPrefix("ab") == 4);
-        assert (trie.howManyStartsWithPrefix("abc") == 1);
-        assert (trie.howManyStartsWithPrefix("b") == 0);
+        assertEquals (5, trie.howManyStartsWithPrefix("a"));
+        assertEquals (4, trie.howManyStartsWithPrefix("ab"));
+        assertEquals (1, trie.howManyStartsWithPrefix("abc"));
+        assertEquals (0, trie.howManyStartsWithPrefix("b"));
     }
 
+    @Test
+    public void serializationBasicTest() throws Exception{
+        Trie trie = new Trie();
+        trie.add("a");
+        trie.add("ab");
+        trie.add("aba");
+        trie.add("abc");
+        trie.add("abb");
+        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+        trie.serialize(outStream);
+        byte[] byteTrie = outStream.toByteArray();
+
+        ByteArrayInputStream inStream = new ByteArrayInputStream(byteTrie);
+        Trie readTrie = new Trie();
+        readTrie.deserialize(inStream);
+
+        assertTrue(readTrie.contains("a"));
+        assertTrue(readTrie.contains("ab"));
+        assertTrue(readTrie.contains("aba"));
+        assertTrue(readTrie.contains("abc"));
+        assertTrue(readTrie.contains("abb"));
+        assertEquals(5, readTrie.size());
+    }
+
+    @Test
+    public void serializationEmptyTrieTest() throws Exception{
+        Trie trie = new Trie();
+        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+        trie.serialize(outStream);
+        byte[] byteTrie = outStream.toByteArray();
+
+        ByteArrayInputStream inStream = new ByteArrayInputStream(byteTrie);
+        Trie readTrie = new Trie();
+        readTrie.add("a");
+        readTrie.add("ab");
+        readTrie.add("aba");
+        readTrie.add("abc");
+        readTrie.add("abb");
+        readTrie.deserialize(inStream);
+
+        assertFalse(readTrie.contains("a"));
+        assertFalse(readTrie.contains("ab"));
+        assertFalse(readTrie.contains("aba"));
+        assertFalse(readTrie.contains("abc"));
+        assertFalse(readTrie.contains("abb"));
+        assertEquals(0, readTrie.size());
+    }
 }
