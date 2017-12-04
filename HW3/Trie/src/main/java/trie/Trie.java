@@ -1,3 +1,5 @@
+package trie;
+
 import java.io.*;
 import java.util.HashMap;
 
@@ -26,9 +28,6 @@ public class Trie implements Serializable {
         head = ((Trie) objectInputStream.readObject()).head;
     }
 
-
-
-
     /**
      * Represents the node in a trie structure.
      */
@@ -42,7 +41,7 @@ public class Trie implements Serializable {
         /**
          * An array of next nodes from this node
          */
-        HashMap<Integer, Node> next;
+        private HashMap<Integer, Node> next;
 
         /**
          * How many strings there are with this prefix
