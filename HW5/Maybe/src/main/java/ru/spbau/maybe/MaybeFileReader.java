@@ -1,6 +1,14 @@
+package ru.spbau.maybe;
+
 import java.io.*;
 import java.util.ArrayList;
 
+import static ru.spbau.maybe.Maybe.just;
+import static ru.spbau.maybe.Maybe.nothing;
+
+/**
+ * Class for reading lines from file and converting them to Maybe integers, then mapping the integers using Maybe rules.
+ */
 public class MaybeFileReader {
     public static void main(String[] args) {
 
@@ -11,10 +19,10 @@ public class MaybeFileReader {
                 Integer lineInt;
                 try {
                     lineInt = Integer.parseInt(line);
+                    maybeArray.add(just(lineInt));
                 } catch (NumberFormatException e) {
-                    lineInt = null;
+                    maybeArray.add(nothing());
                 }
-                maybeArray.add(new Maybe<>(lineInt));
             }
         } catch (IOException e) {
             System.out.println("An IO exception occured");
@@ -24,7 +32,7 @@ public class MaybeFileReader {
             for (Maybe<Integer> maybeInt : maybeArray) {
                 String toWrite;
                 try {
-                    Integer result = maybeInt.map(value -> value*value).get();
+                    Integer result = maybeInt.map(value -> value * value).get();
                     toWrite = Integer.toString(result);
                 } catch (NothingException e) {
                     toWrite = "null";

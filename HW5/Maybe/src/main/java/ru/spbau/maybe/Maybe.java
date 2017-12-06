@@ -1,19 +1,23 @@
+package ru.spbau.maybe;
+
 import com.sun.istack.internal.NotNull;
 
 import java.util.function.Function;
 
 /**
- * Wrapper generic class Maybe is made for handling objects nullable objects.
+ * Wrapper generic class Maybe made for handling nullable objects.
  * @param <T>
  */
 public class Maybe<T> {
 
+    private static final Maybe nothing = new Maybe(null);
+
     /**
-     * Maybe's value, can be null
+     * Maybe's value, can't be null
      */
     private T value;
 
-    public Maybe (T t) {
+    private Maybe (T t) {
         this.value = t;
     }
 
@@ -33,17 +37,18 @@ public class Maybe<T> {
      * @return Maybe containing null
      */
     public static <T> Maybe<T> nothing() {
-        return new Maybe<>(null);
+        return nothing;
     }
 
     /**
      * Returns Maybe's value, throws NothingException if it was Nothing.
      * @return value of Maybe
-     * @throws NothingException
+     * @throws NothingException if it is Nothing
      */
     public T get() throws NothingException {
-        if (!isPresent())
+        if (this.equals(nothing)) {
             throw new NothingException();
+        }
         return value;
     }
 
@@ -52,19 +57,20 @@ public class Maybe<T> {
      * @return if Maybe isn't Nothing
      */
     public boolean isPresent() {
-        return value != null;
+        return !this.equals(nothing);
     }
 
     /**
-     * Applies function to Maybe, throws NothingException if it was Nothing
+     * Applies function to ru.spbau.maybe.Maybe, throws NothingException if it was Nothing
      * @param mapper function to apply
      * @param <U> type of function's result
      * @return Maybe with value of function's result
-     * @throws NothingException
+     * @throws NothingException if it is Nothing
      */
-    public <U> Maybe<U> map(Function<T, U> mapper) throws NothingException {
-        if (!isPresent())
+    public <U> Maybe<U> map(Function<? super T, ? extends U> mapper) throws NothingException {
+        if (this.equals(nothing)) {
             throw new NothingException();
+        }
         return new Maybe<>(mapper.apply(value));
     }
 }

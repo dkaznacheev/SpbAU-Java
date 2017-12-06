@@ -1,24 +1,20 @@
 import org.junit.Test;
+import ru.spbau.maybe.Maybe;
+import ru.spbau.maybe.NothingException;
 
-import java.util.function.Function;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static ru.spbau.maybe.Maybe.just;
+import static ru.spbau.maybe.Maybe.nothing;
 
 public class MaybeTest {
-    @Test
-    public void get() throws Exception {
-        Maybe<String> mbString = new Maybe<>(null);
-        boolean exceptionThrown;
-        try {
-            System.out.println(mbString.get());
-            exceptionThrown = false;
-        } catch (NothingException ex) {
-            exceptionThrown = true;
-        }
-        assert (exceptionThrown);
+    @Test (expected = NothingException.class)
+    public void getThrowExceptionTest() throws Exception {
+        Maybe<String> mbString = nothing();
+        mbString.get();
 
-
-        Maybe<String> mbString2 = new Maybe<>("test");
+        Maybe<String> mbString2 = just("test");
 
         try {
             assert (mbString2.get().equals("test"));
@@ -28,18 +24,29 @@ public class MaybeTest {
     }
 
     @Test
-    public void map() throws Exception {
-        Maybe<Integer> mbInt = new Maybe<>(12);
-        Maybe<Integer> result = mbInt.map(value -> value*value);
-        assert (result.get() == 144);
-        try {
-            Maybe<Integer> mbNo = Maybe.nothing();
-            System.out.println(mbNo.map(x -> 2 * x).get());
-            assert (false);
-        } catch (NothingException e) {
-            assert (true);
-        }
+    public void getNotThrowingTest() throws Exception {
+        Maybe<String> mbString2 = just("test");
 
+        assertEquals("test", mbString2.get());
+    }
+
+    @Test
+    public void isPresentTest() throws Exception {
+        assertTrue(just(1).isPresent());
+        assertFalse(nothing().isPresent());
+    }
+
+    @Test
+    public void mapSimpleTest() throws Exception {
+        Maybe<Integer> mbInt = just(12);
+        Maybe<Integer> result = mbInt.map(value -> value*value);
+        assertEquals (144, (int)result.get());
+    }
+
+    @Test (expected = NothingException.class)
+    public void mapThrowExceptionTest() throws Exception {
+        Maybe<Integer> mbNo = nothing();
+        mbNo.map(x -> 2 * x).get();
     }
 
 }

@@ -1,3 +1,5 @@
+package ru.spbau.binarytree;
+
 /**
  * Binary search tree working as a set, capable of adding/checking elements.
  * @param <T> type of the object it stores
@@ -7,12 +9,12 @@ public class BinaryTree<T> {
     /**
      * The binary tree subclass representing the node of a tree.
      */
-    class Node {
-        T value;
-        Node left;
-        Node right;
+    private static class Node<T> {
+        private T value;
+        private Node<T> left;
+        private Node<T> right;
 
-        public Node(T value) {
+        private Node(T value) {
             this.value = value;
         }
     }
@@ -20,7 +22,7 @@ public class BinaryTree<T> {
     /**
      * Tree's root
      */
-    private Node root;
+    private Node<T> root;
 
     /**
      * Size of tree
@@ -35,13 +37,13 @@ public class BinaryTree<T> {
     public boolean add (T value) {
 
         if (root == null) {
-            root = new Node(value);
+            root = new Node<>(value);
             size++;
             return false;
         }
 
-        Node node = root;
-        Node previousNode = null;
+        Node<T> node = root;
+        Node<T> previousNode = null;
         boolean isLeftSon = false;
 
         while (node != null) {
@@ -59,7 +61,7 @@ public class BinaryTree<T> {
 
         }
 
-        node = new Node(value);
+        node = new Node<>(value);
         if (isLeftSon) {
             previousNode.left = node;
         } else {
@@ -75,7 +77,7 @@ public class BinaryTree<T> {
      * @return if there was this object
      */
     public boolean contains (T value) {
-        Node node = root;
+        Node<T> node = root;
         while (node != null) {
             if (value.equals(node.value)) {
                 return true;

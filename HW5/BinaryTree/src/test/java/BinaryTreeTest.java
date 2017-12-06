@@ -1,43 +1,46 @@
 import org.junit.Test;
+import ru.spbau.binarytree.BinaryTree;
 
-import static org.junit.Assert.*;
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class BinaryTreeTest {
     @Test
-    public void add() throws Exception {
+    public void addSameElementTest() throws Exception {
         BinaryTree<Integer> binaryTree = new BinaryTree<>();
         binaryTree.add(0);
-        binaryTree.add(10);
-        assert (binaryTree.size() == 2);
-        binaryTree.add(10);
-        assert (binaryTree.size() == 2);
+        assertFalse(binaryTree.add(10));
+        assertEquals (2, binaryTree.size());
+        assertTrue(binaryTree.add(10));
+        assertEquals (2, binaryTree.size());
     }
 
     @Test
-    public void contains() throws Exception {
+    public void containsElementsTest() throws Exception {
         BinaryTree<String> binaryTree = new BinaryTree<>();
         binaryTree.add("abc");
         binaryTree.add("aaa");
-        assert (binaryTree.contains("abc"));
-        assert (binaryTree.contains("aaa"));
-        assert (!binaryTree.contains("aba"));
+        assertTrue (binaryTree.contains("abc"));
+        assertTrue (binaryTree.contains("aaa"));
+        assertFalse (binaryTree.contains("aba"));
         binaryTree.add("abcd");
-        assert (binaryTree.contains("abc"));
-        assert (binaryTree.contains("aaa"));
-        assert (!binaryTree.contains("aba"));
-        assert (binaryTree.contains("abcd"));
+        assertTrue (binaryTree.contains("abc"));
+        assertTrue (binaryTree.contains("aaa"));
+        assertFalse (binaryTree.contains("aba"));
+        assertTrue (binaryTree.contains("abcd"));
     }
 
     @Test
-    public void size() throws Exception {
+    public void sizeChangesOnAddTest() throws Exception {
         BinaryTree<String> binaryTree = new BinaryTree<>();
-        assert (binaryTree.size() == 0);
+        assertEquals (0, binaryTree.size());
         binaryTree.add("abc");
-        assert (binaryTree.size() == 1);
+        assertEquals (1, binaryTree.size());
         binaryTree.add("abc");
-        assert (binaryTree.size() == 1);
+        assertEquals (1, binaryTree.size());
         binaryTree.add("aaa");
-        assert (binaryTree.size() == 2);
+        assertEquals (2, binaryTree.size());
 
     }
 
