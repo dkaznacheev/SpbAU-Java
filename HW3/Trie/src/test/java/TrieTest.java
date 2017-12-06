@@ -1,4 +1,5 @@
 import org.junit.Test;
+import ru.spbau.trie.Trie;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

@@ -1,4 +1,4 @@
-package trie;
+package ru.spbau.trie;
 
 import java.io.*;
 import java.util.HashMap;
