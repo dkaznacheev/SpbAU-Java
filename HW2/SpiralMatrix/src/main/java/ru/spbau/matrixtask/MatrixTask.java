@@ -1,3 +1,5 @@
+package ru.spbau.matrixtask;
+
 import java.util.Arrays;
 import java.util.Comparator;
 

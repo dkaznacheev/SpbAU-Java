@@ -1,4 +1,7 @@
 import org.junit.Test;
+import ru.spbau.matrixtask.MatrixTask;
+import ru.spbau.matrixtask.NullRowException;
+import ru.spbau.matrixtask.UnevenRowsException;
 
 import static org.junit.Assert.*;
 
@@ -35,34 +38,22 @@ public class MatrixTaskTest {
         assertArrayEquals(expected2, matrix2);
     }
 
-    @Test
-    public void UnevenRowsException()  {
+    @Test (expected = UnevenRowsException.class)
+    public void UnevenRowsException() throws Exception  {
         int[][] matrix = {{9, 2},
                 {8, 1, 4},
                 {7}};
-        try {
-            MatrixTask.sortColumns(matrix);
-            assertTrue(false);
-        } catch (UnevenRowsException e) {
-            assertTrue(true);
-        } catch (NullRowException e) {
-            assertTrue(false);
-        }
+
+        MatrixTask.sortColumns(matrix);
+
     }
 
-    @Test
-    public void NullRowException()  {
+    @Test (expected = NullRowException.class)
+    public void NullRowException() throws Exception {
         int[][] matrix = {{9, 2, 3},
                 {8, 1, 4},
                 null};
-        try {
-            MatrixTask.sortColumns(matrix);
-            assertTrue(false);
-        } catch (UnevenRowsException e) {
-            assertTrue(false);
-        } catch (NullRowException e) {
-            assertTrue(true);
-        }
+        MatrixTask.sortColumns(matrix);
     }
 
     @Test
@@ -73,11 +64,11 @@ public class MatrixTaskTest {
         String result = MatrixTask.printSpiral(matrix1);
         assert(result.charAt(0) == '1');
         for (int i = 1; i < result.length(); i++) {
-            assert(result.charAt(i) - result.charAt(i - 1) == 1);
+            assertEquals(1, result.charAt(i) - result.charAt(i - 1));
         }
 
         int[][] matrix2 = {{1}};
-        result = MatrixTask.printSpiral(matrix1);
+        result = MatrixTask.printSpiral(matrix2);
         assert(result.charAt(0) == '1');
     }
 
