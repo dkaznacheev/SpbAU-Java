@@ -1,35 +1,27 @@
+package ru.spbau.functional;
+
 /**
  * Abstract predicate is a function taking one argument and giving a boolean result.
  * To derive from Predicate, apply method must be overridden.
  * @param <T> type of argument
  */
-public abstract class MyPredicate<T> extends Function1<T, Boolean> {
+public interface MyPredicate<T> extends Function1<T, Boolean> {
 
     /**
      * Constant predicate, giving true result on any input.
      */
-    public  final MyPredicate<T> ALWAYS_TRUE = new MyPredicate<T>() {
-        @Override
-        public Boolean apply(T arg) {
-            return true;
-        }
-    };
+    MyPredicate ALWAYS_TRUE = (e) -> true;
 
     /**
      * Constant predicate, giving false result on any input.
      */
-    public final MyPredicate<T> ALWAYS_FALSE = new MyPredicate<T>() {
-        @Override
-        public Boolean apply(T arg) {
-            return false;
-        }
-    };
+    MyPredicate ALWAYS_FALSE = (e) -> false;
 
     /**
      * Inverts the predicate.
      * @return new predicate with result inverted
      */
-    public MyPredicate<T> not() {
+    default MyPredicate<T> not() {
         return new MyPredicate<T>() {
             @Override
             public Boolean apply(T arg) {
@@ -42,7 +34,7 @@ public abstract class MyPredicate<T> extends Function1<T, Boolean> {
      * @param predicate predicate to OR with
      * @return new predicate
      */
-    MyPredicate<T> or (MyPredicate <? super T> predicate) {
+    default MyPredicate<T> or(MyPredicate<? super T> predicate) {
         return new MyPredicate<T>() {
             @Override
             public Boolean apply(T arg) {
@@ -57,7 +49,7 @@ public abstract class MyPredicate<T> extends Function1<T, Boolean> {
      * @param predicate predicate to AND with
      * @return new predicate
      */
-    MyPredicate<T> and (MyPredicate <? super T> predicate) {
+    default MyPredicate<T> and (MyPredicate <? super T> predicate) {
         return new MyPredicate<T>() {
             @Override
             public Boolean apply(T arg) {

@@ -1,7 +1,7 @@
 import org.junit.Test;
+import ru.spbau.functional.Function1;
+import ru.spbau.functional.Function2;
 
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 import static org.junit.Assert.*;
 

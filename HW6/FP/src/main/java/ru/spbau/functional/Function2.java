@@ -1,3 +1,5 @@
+package ru.spbau.functional;
+
 /**
  * Abstract function taking two arguments.
  * To derive from Function2, apply method must be overridden.
@@ -5,7 +7,7 @@
  * @param <T2> type of second argument
  * @param <R> type of result
  */
-public abstract class Function2<T1, T2, R> {
+public interface Function2<T1, T2, R> {
 
     /**
      * Abstract method of function application.
@@ -13,7 +15,7 @@ public abstract class Function2<T1, T2, R> {
      * @param arg2 first argument of function
      * @return result of function
      */
-    public abstract R apply(T1 arg1, T2 arg2);
+    R apply(T1 arg1, T2 arg2);
 
     /**Composition of functions, produces the Function2 that takes the initial arguments
      * and gives the result of composition of this function and given Function1
@@ -21,7 +23,7 @@ public abstract class Function2<T1, T2, R> {
      * @param <U> type of composed result
      * @return composed function of two arguments
      */
-    public <U> Function2<T1, T2, U> compose (Function1<? super R, ? extends U> function) {
+    default  <U> Function2<T1, T2, U> compose (Function1<? super R, ? extends U> function) {
         return new Function2<T1, T2, U>() {
             @Override
             public U apply(T1 arg1, T2 arg2) {
@@ -35,7 +37,7 @@ public abstract class Function2<T1, T2, R> {
      * @param arg1 argument to bind
      * @return new Function1 with bound first argument
      */
-    public Function1<T2, R> bind1 (T1 arg1) {
+    default Function1<T2, R> bind1 (T1 arg1) {
         return new Function1<T2, R>() {
             @Override
             public R apply(T2 arg2) {
@@ -49,7 +51,7 @@ public abstract class Function2<T1, T2, R> {
      * @param arg2 argument to bind
      * @return new Function1 with bound second argument
      */
-    public Function1<T1, R> bind2 (T2 arg2) {
+    default Function1<T1, R> bind2 (T2 arg2) {
         return new Function1<T1, R>() {
             @Override
             public R apply(T1 arg1) {
@@ -63,7 +65,7 @@ public abstract class Function2<T1, T2, R> {
      * @param arg1 argument to convert with
      * @return the curried function
      */
-    Function1<T2, R> curry (T1 arg1) {
+    default Function1<T2, R> curry (T1 arg1) {
         return bind1(arg1);
     }
 }
