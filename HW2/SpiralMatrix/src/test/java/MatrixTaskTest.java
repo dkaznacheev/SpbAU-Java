@@ -7,20 +7,15 @@ import static org.junit.Assert.*;
 
 public class MatrixTaskTest {
     @Test
-    public void simpleSortColumns()  {
+    public void simpleSortColumns() throws Exception {
         int[][] matrix1 = {{9, 2, 3},
                           {8, 1, 4},
                           {7, 6 , 5}};
         int[][] expected1 = {{2, 3, 9},
                             {1, 4, 8},
                             {6 , 5, 7}};
-        try {
-            MatrixTask.sortColumns(matrix1);
-        } catch (UnevenRowsException e) {
-            assertTrue(false);
-        } catch (NullRowException e) {
-            assertTrue(false);
-        }
+        
+        MatrixTask.sortColumns(matrix1);
         assertArrayEquals(expected1, matrix1);
         int[][] matrix2 = {{9, 2},
                            {8, 1},
@@ -28,13 +23,8 @@ public class MatrixTaskTest {
         int[][] expected2 = {{2, 9},
                              {1, 8},
                              {6, 7}};
-        try {
-            MatrixTask.sortColumns(matrix2);
-        } catch (UnevenRowsException e) {
-            assertTrue(false);
-        } catch (NullRowException e) {
-            assertTrue(false);
-        }
+        
+        MatrixTask.sortColumns(matrix2);
         assertArrayEquals(expected2, matrix2);
     }
 
