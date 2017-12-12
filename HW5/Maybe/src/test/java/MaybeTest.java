@@ -13,14 +13,9 @@ public class MaybeTest {
     public void getThrowExceptionTest() throws Exception {
         Maybe<String> mbString = nothing();
         mbString.get();
-
         Maybe<String> mbString2 = just("test");
+        assertEquals("test", mbString2.get());
 
-        try {
-            assert (mbString2.get().equals("test"));
-        } catch (NothingException ex) {
-            assert (false);
-        }
     }
 
     @Test

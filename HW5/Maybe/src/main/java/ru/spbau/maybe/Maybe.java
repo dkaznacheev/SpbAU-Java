@@ -1,6 +1,6 @@
 package ru.spbau.maybe;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Function;
 
@@ -9,7 +9,7 @@ import java.util.function.Function;
  * @param <T>
  */
 public class Maybe<T> {
-
+    @SuppressWarnings("unchecked")
     private static final Maybe nothing = new Maybe(null);
 
     /**
@@ -17,7 +17,7 @@ public class Maybe<T> {
      */
     private T value;
 
-    private Maybe (T t) {
+    private Maybe(T t) {
         this.value = t;
     }
 
@@ -36,6 +36,7 @@ public class Maybe<T> {
      * @param <T> object type
      * @return Maybe containing null
      */
+    @SuppressWarnings("unchecked")
     public static <T> Maybe<T> nothing() {
         return nothing;
     }

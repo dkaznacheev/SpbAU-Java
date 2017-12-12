@@ -34,7 +34,7 @@ public class BinaryTree<T> {
      * @param value object to add
      * @return true if there was this object already, false otherwise
      */
-    public boolean add (T value) {
+    public boolean add(T value) {
 
         if (root == null) {
             root = new Node<>(value);
