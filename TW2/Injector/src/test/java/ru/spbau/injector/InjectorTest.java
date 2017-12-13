@@ -109,4 +109,17 @@ public class InjectorTest {
         ClassA instance = (ClassA) object;
         assertTrue(instance.dependency instanceof ClassB);
     }
+
+    @Test
+    public void diamondInitializes() throws Exception {
+        Object object = Injector.initialize(PACKAGE + "DiamondA",
+                Arrays.asList(PACKAGE + "DiamondB",
+                        PACKAGE + "DiamondC",
+                        PACKAGE + "DiamondD")
+        );
+        assertTrue(object instanceof DiamondA);
+        DiamondA diamondA = (DiamondA) object;
+        assertTrue(diamondA.dependencyB instanceof DiamondB);
+        assertTrue(diamondA.dependencyC instanceof DiamondC);
+    }
 }
