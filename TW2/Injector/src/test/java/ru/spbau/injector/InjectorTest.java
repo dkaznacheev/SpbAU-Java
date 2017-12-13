@@ -6,6 +6,7 @@ import ru.spbau.injector.testclasses.*;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 
 public class InjectorTest {
@@ -43,7 +44,7 @@ public class InjectorTest {
     @Test (expected = InjectionCycleException.class)
     public void injectionCycleThrows()
             throws Exception {
-        Object object = Injector.initialize(
+        Injector.initialize(
                 PACKAGE + "ClassAonB",
                 Collections.singletonList(PACKAGE + "ClassBonA")
         );
@@ -52,23 +53,31 @@ public class InjectorTest {
     @Test (expected = InjectionCycleException.class)
     public void indirectInjectionCycleThrows()
             throws Exception {
-        Object object = Injector.initialize(
+        Injector.initialize(
                 PACKAGE + "ClassXonY",
                 Arrays.asList(PACKAGE + "ClassYonZ", PACKAGE + "ClassZonX")
         );
     }
 
+    @Test (expected = InjectionCycleException.class)
+    public void loopInjectionCycleThrows()
+            throws Exception {
+        Injector.initialize(
+                PACKAGE + "ClassXonX", Collections.emptyList()
+        );
+    }
+
     @Test (expected = AmbiguousImplementationException.class)
-    public void ambigiousImplsThrows() throws Exception{
-        Object object = Injector.initialize(
+    public void ambiguousImplementationsThrows() throws Exception{
+        Injector.initialize(
                 PACKAGE + "ClassDependsOnBase",
                 Arrays.asList(PACKAGE + "ClassDerA", PACKAGE + "ClassDerB")
         );
     }
 
     @Test (expected = ImplementationNotFoundException.class)
-    public void implNotFoundThrows() throws Exception{
-        Object object = Injector.initialize(
+    public void implementationNotFoundThrows() throws Exception{
+        Injector.initialize(
                 PACKAGE + "ClassDependsOnBase",
                 Arrays.asList(PACKAGE + "InterfaceImpl",
                               PACKAGE + "InterfaceImplAnother")
@@ -77,7 +86,7 @@ public class InjectorTest {
     }
 
     @Test
-    public void multipleInterfaceImplInitializes () throws Exception {
+    public void multipleInterfaceImplInitializes() throws Exception {
         Object object = Injector.initialize(
                 PACKAGE + "ClassWithTwoInterfaceDependencies",
                 Arrays.asList(PACKAGE + "InterfaceImpl",
@@ -90,7 +99,7 @@ public class InjectorTest {
     }
 
     @Test
-    public void chainDependencyInitializes () throws Exception {
+    public void chainDependencyInitializes() throws Exception {
         Object object = Injector.initialize(
                 PACKAGE + "ClassA",
                 Arrays.asList(PACKAGE + "ClassB",

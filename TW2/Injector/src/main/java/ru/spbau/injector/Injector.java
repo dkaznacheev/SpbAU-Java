@@ -52,6 +52,13 @@ public class Injector {
         return instantiate(rootClass);
     }
 
+
+    /**
+     * Creates an instance of given class (recursively), adds it to map of class-objects,
+     * and returns the instance.
+     * @param clazz class to instantiate
+     * @return instance
+     */
     private static Object instantiate(Class<?> clazz) throws
             AmbiguousImplementationException,
             InjectionCycleException,
