@@ -16,9 +16,9 @@ public abstract class MyClass implements Base, SecondBase {
 		return 0;
 	}
 
-	protected abstract String method_irl();
-
 	public static void method2() {
 	}
+
+	protected abstract String method_irl();
 
 }
