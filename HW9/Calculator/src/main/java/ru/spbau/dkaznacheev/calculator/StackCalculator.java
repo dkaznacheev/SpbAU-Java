@@ -1,4 +1,4 @@
-package calculator;
+package ru.spbau.dkaznacheev.calculator;
 
 import java.util.NoSuchElementException;
 
@@ -58,9 +58,7 @@ public class StackCalculator {
 
             return result.getValue();
 
-        } catch (ClassCastException e) {
-            throw new CalculationException();
-        } catch (NoSuchElementException e) {
+        } catch (ClassCastException | NoSuchElementException e) {
             throw new CalculationException();
         }
 

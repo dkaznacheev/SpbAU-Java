@@ -1,4 +1,4 @@
-package calculator;
+package ru.spbau.dkaznacheev.calculator;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,7 +11,7 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class StackCalculatorTest {
     @Mock
-    public MyStack<CalcToken> stack;
+    private MyStack<CalcToken> stack;
 
     @Test
     public void simpleEvaluate() throws Exception {

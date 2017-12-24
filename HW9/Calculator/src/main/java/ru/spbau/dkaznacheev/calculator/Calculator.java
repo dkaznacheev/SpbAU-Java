@@ -1,4 +1,4 @@
-package calculator;
+package ru.spbau.dkaznacheev.calculator;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,8 +37,6 @@ public class Calculator {
      * Evaluates a single expression
      * @param line expression
      * @return result of calculations
-     * @throws ParseException
-     * @throws CalculationException
      */
     private static int evaluate(String line) throws ParseException, CalculationException {
         MyStack<CalcToken> stack = new ExpressionParser(line).parse();

@@ -1,4 +1,4 @@
-package calculator;
+package ru.spbau.dkaznacheev.calculator;
 
 /**
  * Operation immutable token that is stored in calculation stack, for example, *+-/()

@@ -1,4 +1,4 @@
-package calculator;
+package ru.spbau.dkaznacheev.calculator;
 
 /**
  * Abstract immutable token that is stored in calculation stack.

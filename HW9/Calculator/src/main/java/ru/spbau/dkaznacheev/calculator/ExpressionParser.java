@@ -1,4 +1,4 @@
-package calculator;
+package ru.spbau.dkaznacheev.calculator;
 
 
 /**
@@ -45,18 +45,17 @@ public class ExpressionParser {
          * @return true if the character is an operation
          */
         private boolean isOperation(char ch) {
-            return  (ch == '+') ||
-                    (ch == '-') ||
-                    (ch == '*') ||
-                    (ch == '/') ||
-                    (ch == '(') ||
-                    (ch == ')');
+            return  (ch == '+')
+                 || (ch == '-')
+                 || (ch == '*')
+                 || (ch == '/')
+                 || (ch == '(')
+                 || (ch == ')');
         }
 
         /**
          * Returns the next token from the string, null if the end was reached.
          * @return the next token from the string
-         * @throws ParseException
          */
         public CalcToken getToken() throws ParseException {
             if (pos >= expr.length()) {
@@ -94,7 +93,6 @@ public class ExpressionParser {
      * Parses an expression to postfix-style stack of tokens.
      * Uses a Shunting-yard algorithm.
      * @return stack of tokens in postfix style
-     * @throws ParseException
      */
     public MyStack<CalcToken> parse() throws ParseException {
         MyStack<CalcToken> outStack = new MyStack<>();
