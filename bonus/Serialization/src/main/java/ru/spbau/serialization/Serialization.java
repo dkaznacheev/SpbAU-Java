@@ -27,7 +27,7 @@ public class Serialization {
      * @param object object to serialize
      * @param outputStream stream to write object to
      */
-    public static void serialize(Object object, OutputStream outputStream) throws IllegalAccessException, IOException, UnsupportedTypeException {
+    public static void serialize(Object object, OutputStream outputStream) throws IllegalArgumentException, IllegalAccessException, IOException, UnsupportedTypeException {
         DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
         if (object == null) {
             dataOutputStream.writeBoolean(true);
@@ -56,6 +56,9 @@ public class Serialization {
             } else if (type == char.class) {
                 dataOutputStream.writeChar((char) field.get(object));
             } else if (type == String.class) {
+                if ((String) field.get(object) == null) {
+                    throw new IllegalArgumentException();
+                }
                 dataOutputStream.writeUTF((String) field.get(object));
             } else {
                 throw new UnsupportedTypeException();

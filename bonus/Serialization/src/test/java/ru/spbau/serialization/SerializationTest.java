@@ -82,7 +82,6 @@ public class SerializationTest {
         InputStream is = new ByteArrayInputStream(os.toByteArray());
         SimpleClass test2 = deserialize(is, SimpleClass.class);
         assertEquals(test1, test2);
-
     }
 
     @Test
@@ -104,19 +103,14 @@ public class SerializationTest {
         InputStream is = new ByteArrayInputStream(os.toByteArray());
         StringFieldClass test2 = deserialize(is, StringFieldClass.class);
         assertEquals(test1, test2);
-
     }
 
-    @Test (expected = NullPointerException.class)
+    @Test (expected = IllegalArgumentException.class)
     public void testStringNullFieldInstanceThrows() throws IOException, InstantiationException, IllegalAccessException, UnsupportedTypeException {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         StringFieldClass test1 = new StringFieldClass();
         test1.stringField = null;
         serialize(test1, os);
-        InputStream is = new ByteArrayInputStream(os.toByteArray());
-        StringFieldClass test2 = deserialize(is, StringFieldClass.class);
-        assertEquals(test1, test2);
-
     }
 
     @Test (expected = UnsupportedTypeException.class)
@@ -125,10 +119,6 @@ public class SerializationTest {
         UnsupportedFieldClass test1 = new UnsupportedFieldClass();
         test1.unsupportedField = test1;
         serialize(test1, os);
-        InputStream is = new ByteArrayInputStream(os.toByteArray());
-        UnsupportedFieldClass test2 = deserialize(is, UnsupportedFieldClass.class);
-        assertEquals(test1, test2);
-
     }
 
     @Test
@@ -147,7 +137,6 @@ public class SerializationTest {
         InputStream is = new ByteArrayInputStream(os.toByteArray());
         PrimitiveClass test2 = deserialize(is, PrimitiveClass.class);
         assertEquals(test1, test2);
-
     }
 
     @Test (expected = InstantiationException.class)
@@ -158,6 +147,5 @@ public class SerializationTest {
         InputStream is = new ByteArrayInputStream(os.toByteArray());
         PrivateFieldClass test2 = deserialize(is, PrivateFieldClass.class);
         assertEquals(test1, test2);
-
     }
 }
