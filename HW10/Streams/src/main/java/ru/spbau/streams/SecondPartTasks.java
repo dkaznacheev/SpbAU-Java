@@ -33,14 +33,11 @@ public final class SecondPartTasks {
         final int sampleSize = 1000;
         final int targetSize = 1000;
         return new Random().ints(sampleSize, 0, targetSize * targetSize)
-                .filter(new IntPredicate() {
-                    @Override
-                    public boolean test(int value) {
-                        int x = value % targetSize;
-                        int y = value / targetSize;
-                        return x * x + y * y < targetSize * targetSize;
-                    }
-                }).count() / (double) sampleSize;
+                .filter(value ->
+                                (value % targetSize) * (value % targetSize)
+                              + (value / targetSize) * (value / targetSize)
+                              < targetSize * targetSize
+                  ).count() / (double) sampleSize;
     }
 
     // Дано отображение из имени автора в список с содержанием его произведений.

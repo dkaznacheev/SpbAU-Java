@@ -28,12 +28,8 @@ public final class FirstPartTasks {
 
     // Список альбомов, в которых есть хотя бы один трек с рейтингом более 95, отсортированный по названию
     public static List<Album> sortedFavorites(Stream<Album> s) {
-        return s.filter(new Predicate<Album>() {
-            @Override
-            public boolean test(Album album) {
-                return album.getTracks().stream().anyMatch(((t)->t.getRating() > 95));
-            }
-        }).sorted(Comparator.comparing(Album::getName)).collect(Collectors.toList());
+        return s.filter(album -> album.getTracks().stream().anyMatch(((t)->t.getRating() > 95))
+            ).sorted(Comparator.comparing(Album::getName)).collect(Collectors.toList());
     }
 
     // Сгруппировать альбомы по артистам
@@ -56,12 +52,8 @@ public final class FirstPartTasks {
         return albums.collect(Collectors.groupingBy(
                 Album::getName,
                 HashMap::new,
-                Collectors.toList())).entrySet().stream().filter(new Predicate<Map.Entry<String, List<Album>>>() {
-            @Override
-            public boolean test(Map.Entry<String, List<Album>> stringListEntry) {
-                return stringListEntry.getValue().size() > 1;
-            }
-        }).count();
+                Collectors.toList())).entrySet().stream().filter(stringListEntry ->  stringListEntry.getValue().size() > 1)
+            .count();
     }
 
     // Альбом, в котором максимум рейтинга минимален
@@ -84,18 +76,13 @@ public final class FirstPartTasks {
 
     // Список альбомов, отсортированный по убыванию среднего рейтинга его треков (0, если треков нет)
     public static List<Album> sortByAverageRating(Stream<Album> albums) {
-        return albums.sorted(new Comparator<Album>() {
-            private double avgRating(Album album) {
-                if (album.getTracks().size() == 0)
-                    return 0;
-                return album.getTracks().stream().mapToInt(Track::getRating).average().getAsDouble();
-            }
-
-            @Override
-            public int compare(Album o1, Album o2) {
-                return (int)(avgRating(o2) - avgRating(o1));
-            }
-        }).collect(Collectors.toList());
+        return albums.sorted(Comparator.comparingDouble(
+                album -> -album.getTracks()
+                        .stream()
+                        .mapToDouble(Track::getRating)
+                        .average()
+                        .orElse(0)))
+                        .collect(Collectors.toList());
     }
 
     // Произведение всех чисел потока по модулю 'modulo'

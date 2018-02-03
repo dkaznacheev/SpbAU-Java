@@ -3,10 +3,7 @@ import org.junit.Test;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.Assert.*;
 import static ru.spbau.streams.SecondPartTasks.*;
@@ -64,7 +61,7 @@ public class SecondPartTasksTest {
                 "Кот кататься не привык -\n" +
                 "Опрокинул грузовик."
         ));
-        library.put("Jim Morrison", Arrays.asList(
+        library.put("Jim Morrison", Collections.singletonList(
                 "Shake dreams from your hair\n" +
                 "My pretty child, my sweet one.\n" +
                 "Choose the day and\n" +
@@ -87,7 +84,7 @@ public class SecondPartTasksTest {
                 "Come with us\n" +
                 "Everything is broken up and dances."
         ));
-        library.put("William Carlos Williams", Arrays.asList(
+        library.put("William Carlos Williams", Collections.singletonList(
                 "so much depends\n" +
                 "upon\n" +
                 "\n" +
@@ -100,7 +97,7 @@ public class SecondPartTasksTest {
                 "beside the white\n" +
                 "chickens."
         ));
-        library.put("me", Arrays.asList(""));
+        library.put("me", Collections.singletonList(""));
 
         assertEquals("Jim Morrison", findPrinter(library));
     }
