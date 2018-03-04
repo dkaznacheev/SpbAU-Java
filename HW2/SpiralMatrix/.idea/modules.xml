@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SpiralMatrix.iml" filepath="$PROJECT_DIR$/.idea/modules/SpiralMatrix.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SpiralMatrix_main.iml" filepath="$PROJECT_DIR$/.idea/modules/SpiralMatrix_main.iml" group="SpiralMatrix" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/SpiralMatrix_test.iml" filepath="$PROJECT_DIR$/.idea/modules/SpiralMatrix_test.iml" group="SpiralMatrix" />
+    </modules>
+  </component>
+</project>
